@@ -1,1 +1,180 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
 
+void toUpperCase(char* str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        str[i] = toupper(str[i]);
+    }
+}
+
+bool carihorizontal(char* word, char matrix[][24], int wordLen) {
+    for (int i = 0; i < 24; i++) {
+        for (int j = 0; j <= 24; j++) {
+            bool found = true;
+            for (int k = 0; k < wordLen; k++) {
+                if (matrix[i][j + k] != word[k]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool carivertical(char* word, char matrix[][24], int wordLen) {
+    for (int i = 0; i <= 24; i++) {
+        for (int j = 0; j < 24; j++) {
+            bool found = true;
+            for (int k = 0; k < wordLen; k++) {
+                if (matrix[i + k][j] != word[k]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool caridiagonalataskiri(char* word, char matrix[][24], int wordLen) {
+    for (int i = 0; i < 24; i++) {
+        for (int j = 0; j < 24; j++) {
+            bool found = true;
+            for (int k = 0; k < wordLen; k++) {
+                if (matrix[i - k][j - k] != word[k]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool caridiagonalataskanan(char* word, char matrix[][24], int wordLen) {
+    for (int i = 0; i < 24; i++) {
+        for (int j = 0; j <= 24; j++) {
+            bool found = true;
+            for (int k = 0; k < wordLen; k++) {
+                if (matrix[i - k][j + k] != word[k]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool caridiagonalbawahkanan(char* word, char matrix[][24], int wordLen) {
+    for (int i = 0; i <= 24; i++) {
+        for (int j = 0; j <= 24; j++) {
+            bool found = true;
+            for (int k = 0; k < wordLen; k++) {
+                if (matrix[i + k][j + k] != word[k]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool caridiagonalbawahkiri(char* word, char matrix[][24], int wordLen) {
+    for (int i = 0; i <= 24; i++) {
+        for (int j = 0; j < 24; j++) {
+            bool found = true;
+            for (int k = 0; k < wordLen; k++) {
+                if (matrix[i + k][j - k] != word[k]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool cariKata(char* word) {
+    char matrix[24][24] = {
+        "AAFLKHPFSSUFICICLESGNNH",
+        "SFVREOMRWLRTTSXOQQNAOAO",
+        "QEIAIFXAEIRFVFYSXIMINJI",
+        "WSTRLGOCAPBIAFIWIWTUACM",
+        "FEYAEAISTPCRLUJKOAKCERS",
+        "RVDAKPNDEEHDEMSNCKKFOAH",
+        "MRNEDSLCRRIWNRSAAFITMMI",
+        "YAAECIEAHYMOTAVHRSSTISB",
+        "RJSEWELCCENNIETOHWSGLSE",
+        "ATANYYMOIEESNESIOIRELTR",
+        "UTENEWEBHMYBETNNRAIEBEN",
+        "RCLKUTEAEQJLSGSHTGDSKOA",
+        "BHOICATNRRSDDECEHOOLGIT",
+        "ENSLUARIRSETALOCOHCTOHE",
+        "FZFUDQJYMADOYIWYGLOVESU",
+        "TEKALFWONSNAEBMIEJTZNTG",
+        "ESWPOSJXEUTUYOZUWAKEZHM",
+        "KZUHBPEZEERFLMSNOWBALLH",
+        "NSNOWBOARDYTVWYCLEVOHSA",
+        "ACOCRQLGZIYCHODRAZZILBI",
+        "LBVKKWANZAAQINWOLPWONSL",
+        "BFREEZINGRAINSLILGTMELT",
+        "HQPYLWHFMNFFUFPSWXNUMMV"
+    };
+
+    int wordLen = strlen(word);
+
+    if (carihorizontal(word, matrix, wordLen) ||
+        carivertical(word, matrix, wordLen) ||
+        caridiagonalataskiri(word, matrix, wordLen) ||
+        caridiagonalataskanan(word, matrix, wordLen) ||
+        caridiagonalbawahkanan(word, matrix, wordLen) ||
+        caridiagonalbawahkiri(word, matrix, wordLen)) {
+        return true;
+    }
+    return false;
+}
+
+int main() {
+    int num;
+    cin >> num;
+    cin.ignore(); 
+
+    char words[num][25]; 
+
+    for (int i = 0; i < num; i++) {
+        cin.getline(words[i], 25);
+        toUpperCase(words[i]); 
+    }
+    cout<<endl;
+    for (int i = 0; i < num; i++) {
+        if (cariKata(words[i])) {
+            cout << "Ada" << endl;
+        } else {
+            cout << "Tidak Ada" << endl;
+        }
+    }
+
+return 0;
+}
